@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Honourable Divine — Engineering Portfolio</title>
+<link rel="icon" href="favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background:#0d1210;
+    --foreground:#f2f5f2;
+    --card:#151b18;
+    --primary:#c8f24d;
+    --primary-foreground:#122111;
+    --muted-foreground:#a3aca4;
+    --border:#2a332c;
+    --signal:#e0a952;
+    --glow: rgba(200,242,77,0.3);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--background);
+    color:var(--foreground);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 24px;}
+
+  /* NAV */
+  header{position:fixed; inset:0 0 auto 0; z-index:50;}
+  .navbar{
+    max-width:1100px; margin:12px auto 0; display:flex; align-items:center; justify-content:space-between;
+    padding:12px 20px; border-radius:10px;
+    background:rgba(21,27,24,0.6); backdrop-filter:blur(16px) saturate(130%);
+    border:1px solid rgba(200,242,77,0.12);
+  }
+  .logo{font-family:'JetBrains Mono',monospace; font-weight:700; letter-spacing:.15em; color:var(--primary); font-size:14px;}
+  .logo span{color:var(--foreground);}
+  nav.links{display:none; align-items:center; gap:32px;}
+  nav.links a{font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); transition:color .2s;}
+  nav.links a:hover, nav.links a.active{color:var(--primary);}
+  .hire-btn{background:var(--primary); color:var(--primary-foreground) !important; padding:7px 18px; border-radius:6px; font-weight:600;}
+  .menu-btn{display:block; background:none; border:none; color:var(--foreground); font-size:22px; cursor:pointer;}
+  .mobile-menu{display:none; flex-direction:column; gap:16px; max-width:1100px; margin:4px auto 0; padding:20px 24px; border-radius:10px; background:rgba(21,27,24,0.75); backdrop-filter:blur(16px); border:1px solid rgba(200,242,77,0.12);}
+  .mobile-menu a{font-family:'JetBrains Mono',monospace; font-size:14px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground);}
+  .mobile-menu.open{display:flex;}
+  @media(min-width:768px){
+    nav.links{display:flex;}
+    .menu-btn{display:none;}
+  }
+
+  section{padding:96px 0 64px;}
+  .blueprint{
+    background-image:
+      linear-gradient(rgba(200,242,77,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,242,77,0.05) 1px, transparent 1px);
+    background-size:48px 48px;
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.3em; color:var(--primary);}
+  .eyebrow.signal{color:var(--signal);}
+  h1{font-size:2.6rem; font-weight:700; line-height:1.15; margin-top:14px;}
+  h2{font-size:2rem; font-weight:600; margin-top:12px;}
+  h3{font-size:1.3rem; font-weight:600;}
+  p.lead{margin-top:16px; max-width:640px; color:var(--muted-foreground);}
+  .pill{display:inline-flex; align-items:center; gap:6px; margin-top:24px; padding:10px 20px; border:1px solid rgba(200,242,77,0.35); border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:.15em; color:var(--primary);}
+  .pill:hover{background:var(--primary); color:var(--primary-foreground);}
+  .btn-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:28px;}
+
+  .glass{background:rgba(30,39,34,0.55); backdrop-filter:blur(16px) saturate(130%); border:1px solid rgba(200,242,77,0.12); border-radius:10px; padding:24px;}
+  blockquote{margin-top:40px; max-width:600px; border-left:2px solid var(--primary); padding:20px 24px;}
+  blockquote p{font-style:italic; font-size:1.1rem;}
+  blockquote footer{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted-foreground);}
+
+  .grid3{display:grid; gap:24px; margin-top:48px; grid-template-columns:1fr;}
+  @media(min-width:768px){.grid3{grid-template-columns:repeat(3,1fr);}}
+  .grid2{display:grid; gap:12px; margin-top:40px; grid-template-columns:1fr; }
+  @media(min-width:640px){.grid2{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1024px){.grid2{grid-template-columns:repeat(4,1fr);}}
+
+  .card{border:1px solid var(--border); background:var(--card); border-radius:10px; overflow:hidden; transition:border-color .2s;}
+  .card:hover{border-color:rgba(200,242,77,0.4);}
+  .card img{aspect-ratio:4/3; object-fit:cover; width:100%; transition:transform .5s;}
+  .card:hover img{transform:scale(1.05);}
+  .card-body{padding:18px;}
+  .card-body .code{font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted-foreground);}
+  .card-body h4{margin-top:8px; font-size:1.05rem; font-weight:600;}
+  .card-body p{margin-top:4px; font-size:.9rem; color:var(--muted-foreground);}
+
+  .project-row{display:grid; gap:32px; align-items:center; margin-bottom:64px; grid-template-columns:1fr;}
+  @media(min-width:768px){.project-row{grid-template-columns:1fr 1fr;}}
+  .project-row.reverse .img-box{order:2;}
+  .img-box{border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+  .tech-tag{display:inline-block; border:1px solid var(--border); background:var(--card); padding:5px 10px; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted-foreground); margin:4px 6px 0 0;}
+  .highlight-badge{display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:6px 14px; border:1px solid rgba(224,169,82,0.4); background:rgba(224,169,82,0.1); border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.15em; color:var(--signal);}
+
+  .embed-item{display:flex; align-items:center; gap:10px; padding:16px; border-radius:8px;}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--primary); flex-shrink:0;}
+
+  .skill-tag{display:inline-block; border:1px solid var(--border); padding:7px 14px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; color:var(--muted-foreground); margin:0 8px 8px 0;}
+
+  .contact-link{display:flex; align-items:center; gap:12px; padding:16px; border:1px solid var(--border); border-radius:8px; margin-bottom:12px; transition:border-color .2s;}
+  .contact-link:hover{border-color:rgba(200,242,77,0.4);}
+  .contact-link .label{font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted-foreground);}
+  .contact-link .value{font-weight:600; margin-top:2px;}
+
+  footer.site-footer{border-top:1px solid var(--border); padding:40px 0;}
+  .footer-flex{display:flex; flex-direction:column; gap:24px; justify-content:space-between; align-items:flex-start;}
+  @media(min-width:640px){.footer-flex{flex-direction:row; align-items:center;}}
+  .footer-links{display:flex; flex-wrap:wrap; gap:20px; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted-foreground);}
+  .footer-links a:hover{color:var(--primary);}
+
+  .hero{position:relative; padding-top:160px;}
+  .hero-bg{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0.15; z-index:-1;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a href="#home" class="logo">HD<span>.</span></a>
+    <nav class="links">
+      <a href="#home" class="active">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="hire-btn">Hire Me</a>
+    </nav>
+    <button class="menu-btn" onclick="document.getElementById('mmenu').classList.toggle('open')">☰</button>
+  </div>
+  <div class="mobile-menu" id="mmenu">
+    <a href="#home">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="hero blueprint">
+  <div class="wrap">
+    <p class="eyebrow">// Mission</p>
+    <h1>Building technologies that solve real-world problems through engineering, robotics, renewable energy, and artificial intelligence.</h1>
+    <blockquote class="glass">
+      <p>"Every prototype I build is a rehearsal for the company I'm building. I'd rather ship something small and working than something big and theoretical."</p>
+      <footer>— Samuel Ubon Divine</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- FEATURED PROJECTS -->
+<section style="border-top:1px solid var(--border); padding-top:64px;">
+  <div class="wrap">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px;">
+      <div>
+        <p class="eyebrow">// Featured Work</p>
+        <h2>Selected Projects</h2>
+      </div>
+      <a href="#projects" class="mono" style="font-size:12px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground);">All projects →</a>
+    </div>
+    <div class="grid3" id="featured-projects"></div>
+  </div>
+</section>
+
+<!-- VISION CTA -->
+<section style="border-top:1px solid var(--border); text-align:center;">
+  <div class="wrap">
+    <p class="eyebrow signal">// Vision 2035</p>
+    <h2 style="max-width:640px; margin-left:auto; margin-right:auto;">Building one of Africa's leading engineering companies — innovations that compete globally.</h2>
+    <a href="#about" class="pill" style="margin-top:32px;">The full story →</a>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="blueprint" style="border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding-bottom:0;">
+  <div class="wrap">
+    <p class="eyebrow">// Project Archive</p>
+    <h1 style="font-size:2.2rem;">Engineering Projects</h1>
+    <p class="lead">Prototypes, competition-winning builds, and embedded systems — each one a rehearsal for the company being built.</p>
+  </div>
+</section>
+
+<section style="padding-top:64px;">
+  <div class="wrap" id="all-projects"></div>
+</section>
+
+<section style="border-top:1px solid var(--border);">
+  <div class="wrap">
+    <p class="eyebrow">// PRJ-006</p>
+    <h2>Embedded Systems Projects</h2>
+    <div class="grid2" id="embedded-list"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="blueprint" style="border-top:1px solid var(--border);">
+  <div class="wrap">
+    <p class="eyebrow">// About</p>
+    <h1 style="font-size:2.2rem;">Samuel Ubon Divine</h1>
+    <p class="lead">Also known as Honourable Divine — final-year Electrical Engineering student, Head Boy (Electrical) at Government Technical College Ikotun, and founder of DiVion Technologies. Building a hardware-first company spanning smart power solutions, electronics repair, IoT, robotics, and solar systems — with a long-term ambition to grow it into a major engineering conglomerate serving Nigerian and global markets.</p>
+
+    <h3 style="margin-top:48px;">Leadership</h3>
+    <div class="grid2" id="leadership-list" style="grid-template-columns:1fr; max-width:500px;"></div>
+
+    <h3 style="margin-top:48px;">Skills</h3>
+    <div style="margin-top:16px;" id="skills-list"></div>
+
+    <h3 style="margin-top:48px;">Vision 2035</h3>
+    <div style="margin-top:16px;" id="vision-list"></div>
+
+    <h3 style="margin-top:48px;">Certifications</h3>
+    <div style="margin-top:16px;" id="cert-list"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="border-top:1px solid var(--border);">
+  <div class="wrap">
+    <p class="eyebrow">// Get in Touch</p>
+    <h1 style="font-size:2.2rem;">Let's Build Something</h1>
+    <p class="lead">Open to collaborations, project inquiries, and partnership opportunities.</p>
+    <div style="margin-top:40px; max-width:480px;" id="contact-list"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-flex">
+    <div>
+      <p class="logo">HD<span>.</span></p>
+      <p class="mono" style="font-size:12px; color:var(--muted-foreground); margin-top:4px;">Samuel Ubon Divine — Shaping Tomorrow.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/samuel-divine-2943b534a" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://instagram.com/honorable_divine" target="_blank" rel="noreferrer">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const projects = [
+  {id:"spaar", code:"PRJ-001", name:"SPAAR", subtitle:"Solar Powered AI Agricultural Robot",
+    description:"An autonomous tomato farming robot equipped with AI-powered disease detection, robotic arm harvesting, intelligent irrigation, automated spraying, and solar-powered operation.",
+    status:"Prototype", tech:["AI Vision","Robotic Arm","Solar Power","Automation"], image:"assets/project-spaar.jpg"},
+  {id:"helioai", code:"PRJ-002", name:"HelioAI", subtitle:"Intelligent Solar Energy Management System",
+    description:"An AI-powered renewable energy platform capable of monitoring power generation, battery condition, energy consumption, predictive weather analysis, and web-based remote monitoring.",
+    status:"Prototype", tech:["AI","Solar Systems","Web Dashboard","IoT"], image:"assets/project-helioai.jpg"},
+  {id:"asg", code:"PRJ-003", name:"ASG — Auto Switch Guard", subtitle:"Portable Electrical Fire Safety Device",
+    description:"Automatically disconnects electric hot plates after power restoration to prevent electrical fires, protect homes, and reduce damage caused by unattended appliances.",
+    status:"Prototype", tech:["Arduino","Relay Modules","Power Electronics"], image:"assets/project-asg.jpg"},
+  {id:"agropolybot", code:"PRJ-004", name:"Agropolybot", subtitle:"Battle of the Bot 2.0 Winning Project",
+    description:"Competition-winning innovation that converts locally sourced cassava starch into biodegradable plastic as an environmentally friendly alternative to petroleum-based plastics.",
+    status:"Winner", tech:["Bioplastics","Materials","Sustainability"], image:"assets/project-agropolybot.jpg",
+    highlight:"Winner — Battle of the Bot 2.0, Senior Category"},
+  {id:"divion-energy", code:"PRJ-005", name:"DiVion Energy Prototype", subtitle:"Portable Renewable Energy System",
+    description:"Portable solar-powered energy system providing AC/DC outputs, USB charging, integrated battery management, and portable renewable energy.",
+    status:"Prototype", tech:["Solar","Battery Management","Power Electronics"], image:"assets/project-energy.jpg"}
+];
+
+const embeddedProjects = ["Arduino Automation Systems","ESP32 Current Monitoring Dashboard","Regulated DC Power Supply","Smart Lighting System","Automatic Water Level Controller","Obstacle Avoidance Robot","Line Following Robot","Solar Installation Projects"];
+
+const skills = ["Electrical Engineering","Electrical Design","Power Systems","Electronics","Embedded Systems","Arduino","ESP32","Microcontrollers","PCB Design","IoT","Automation","Renewable Energy","Solar Systems","Robotics","Artificial Intelligence","Smart Energy Systems","Power Electronics","Web Dashboards","Engineering Design","Prototype Development","Engineering Research","Technical Leadership","Problem Solving"];
+
+const leadership = [
+  {role:"Founder", org:"DiVion Technologies"},
+  {role:"Founder", org:"Kingdom Tech's Concept"},
+  {role:"Head Boy", org:"Government Technical College Ikotun"},
+  {role:"Team Leader", org:"Engineering Competitions"},
+  {role:"Advocate", org:"Youth Technology"}
+];
+
+const certifications = ["HP Effective Leadership","HP Introduction to Cyber Security Awareness","Slingshot Challenge 2026 Participation"];
+
+const vision2035 = ["Become one of Africa's leading engineering companies","Develop globally recognized hardware products","Advance robotics and renewable energy technologies","Empower young innovators through engineering education","Create intelligent technologies that solve real-world problems"];
+
+const contact = {
+  phone:"0704 181 3951", phoneHref:"tel:+2347041813951",
+  whatsapp:"0812 579 5087", whatsappHref:"https://wa.me/2348125795087",
+  email:"honorabledivine07@gmail.com", emailHref:"mailto:honorabledivine07@gmail.com",
+  instagram:"@honorable_divine", instagramHref:"https://instagram.com/honorable_divine",
+  linkedin:"samuel-divine-2943b534a", linkedinHref:"https://www.linkedin.com/in/samuel-divine-2943b534a"
+};
+
+// Featured (first 3)
+document.getElementById('featured-projects').innerHTML = projects.slice(0,3).map(p => `
+  <a href="#${p.id}" class="card">
+    <img src="${p.image}" alt="${p.subtitle}">
+    <div class="card-body">
+      <p class="code">${p.code} · ${p.status}</p>
+      <h4>${p.name}</h4>
+      <p>${p.subtitle}</p>
+    </div>
+  </a>
+`).join('');
+
+// All projects
+document.getElementById('all-projects').innerHTML = projects.map((p,i) => `
+  <article id="${p.id}" class="project-row ${i%2===1 ? 'reverse' : ''}">
+    <div class="img-box"><img src="${p.image}" alt="${p.subtitle}"></div>
+    <div>
+      <p class="mono" style="font-size:11px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted-foreground);">${p.code}</p>
+      <h3 style="margin-top:8px; font-size:1.6rem;">${p.name}</h3>
+      <p class="mono" style="margin-top:4px; font-size:13px; color:var(--primary);">${p.subtitle}</p>
+      <p style="margin-top:16px; color:var(--muted-foreground);">${p.description}</p>
+      ${p.highlight ? `<p class="highlight-badge">🏆 ${p.highlight}</p>` : ''}
+      <div style="margin-top:20px;">${p.tech.map(t=>`<span class="tech-tag">${t}</span>`).join('')}</div>
+      <p class="mono" style="margin-top:20px; font-size:11px; text-transform:uppercase; letter-spacing:.15em; color:var(--muted-foreground);">Status: <span style="color:var(--primary);">${p.status}</span></p>
+    </div>
+  </article>
+`).join('');
+
+// Embedded
+document.getElementById('embedded-list').innerHTML = embeddedProjects.map(e => `
+  <div class="embed-item glass"><span class="dot"></span><p style="font-size:.9rem;">${e}</p></div>
+`).join('');
+
+// Leadership
+document.getElementById('leadership-list').innerHTML = leadership.map(l => `
+  <div class="glass" style="padding:16px;"><p style="font-weight:600;">${l.role}</p><p class="mono" style="font-size:12px; color:var(--muted-foreground); margin-top:2px;">${l.org}</p></div>
+`).join('');
+
+// Skills
+document.getElementById('skills-list').innerHTML = skills.map(s => `<span class="skill-tag">${s}</span>`).join('');
+
+// Vision
+document.getElementById('vision-list').innerHTML = vision2035.map(v => `
+  <div class="embed-item glass" style="margin-bottom:10px;"><span class="dot" style="background:var(--signal);"></span><p style="font-size:.9rem;">${v}</p></div>
+`).join('');
+
+// Certifications
+document.getElementById('cert-list').innerHTML = certifications.map(c => `
+  <div class="embed-item glass" style="margin-bottom:10px;"><span class="dot"></span><p style="font-size:.9rem;">${c}</p></div>
+`).join('');
+
+// Contact
+document.getElementById('contact-list').innerHTML = `
+  <a href="${contact.phoneHref}" class="contact-link"><div><p class="label">Phone</p><p class="value">${contact.phone}</p></div></a>
+  <a href="${contact.whatsappHref}" target="_blank" class="contact-link"><div><p class="label">WhatsApp</p><p class="value">${contact.whatsapp}</p></div></a>
+  <a href="${contact.emailHref}" class="contact-link"><div><p class="label">Email</p><p class="value">${contact.email}</p></div></a>
+  <a href="${contact.instagramHref}" target="_blank" class="contact-link"><div><p class="label">Instagram</p><p class="value">${contact.instagram}</p></div></a>
+  <a href="${contact.linkedinHref}" target="_blank" class="contact-link"><div><p class="label">LinkedIn</p><p class="value">${contact.linkedin}</p></div></a>
+`;
+</script>
+
+</body>
+</html>
